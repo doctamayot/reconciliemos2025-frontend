@@ -1,0 +1,23 @@
+/* src/index.css */
+@import "tailwindcss";
+
+/* Tus estilos globales personalizados pueden ir después de las directivas */
+body {
+  /* margin: 0;  -> Tailwind base ya incluye resets, podrías quitar este */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #fff;
+  color: #333;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
