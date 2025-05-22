@@ -6,7 +6,7 @@ import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 // --- IMPORTACIÓN DE LA IMAGEN ---
 // Asegúrate de que 'cta.png' exista en la ruta 'src/assets/cta.png'
 // Si el archivo tiene otro nombre o está en otra subcarpeta de assets, ajusta la ruta.
-import CtaImageFromFile from "../../assets/cta.jpg";
+import CtaImageFromFile from "../../assets/cta.webp";
 // --- FIN IMPORTACIÓN ---
 
 const CtaSection = () => {

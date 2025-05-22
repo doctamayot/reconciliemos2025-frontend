@@ -7,7 +7,7 @@ import {
   selectIsAuthenticated,
   selectUser,
 } from "../../features/auth/authSlice";
-import LogoImage from "../../assets/logo.png"; // Asegúrate que la ruta es correcta
+import LogoImage from "../../assets/logo.webp"; // Asegúrate que la ruta es correcta
 import {
   Bars3Icon,
   XMarkIcon,

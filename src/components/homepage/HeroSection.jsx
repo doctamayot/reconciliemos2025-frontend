@@ -1,6 +1,6 @@
 // src/components/homepage/HeroSection.jsx
 
-import HeroBackgroundImage from "../../assets/home.png"; // Asegúrate que 'home.png' esté en 'src/assets/'
+import HeroBackgroundImage from "../../assets/home.webp"; // Asegúrate que 'home.png' esté en 'src/assets/'
 
 const HeroSection = () => {
   const handleScrollToServices = (event) => {

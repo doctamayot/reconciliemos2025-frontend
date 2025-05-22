@@ -9,7 +9,7 @@ import {
   selectAuthError,
   clearAuthError,
 } from "../features/auth/authSlice"; // Importa acciones y selectors
-import LogoImage from "../assets/logo.png";
+import LogoImage from "../assets/logo.webp";
 import { LockClosedIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 // import { XCircleIcon } from '@heroicons/react/24/solid'; // Para el mensaje de error
 

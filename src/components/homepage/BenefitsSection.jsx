@@ -1,5 +1,5 @@
 // src/components/homepage/BenefitsSection.jsx
-import React from "react"; // No necesitamos useRef aquí si el hook lo provee
+
 import {
   ShieldCheckIcon,
   ClockIcon,

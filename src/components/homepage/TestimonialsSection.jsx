@@ -18,7 +18,7 @@ const testimonialsData = [
       "Gracias a Reconciliemos Colombia y el proceso de insolvencia, pude renegociar mis obligaciones y hoy mi emprendimiento tiene un nuevo aire. ¡Un alivio total y un equipo muy profesional!",
     name: "Ricardo G.",
     role: "Dueño de Pequeño Negocio",
-    image: "/src/assets/testimonials/ricardo.jpg", // Placeholder para imagen
+    image: "/src/assets/testimonials/ricardo.webp", // Placeholder para imagen
   },
   {
     id: 7, // Nuevo ID
@@ -26,7 +26,7 @@ const testimonialsData = [
       "Después de perder mi empleo, las deudas se acumularon rápidamente. El proceso de insolvencia me dio la tranquilidad que necesitaba para reorganizar mis finanzas. El acompañamiento de Reconciliemos Colombia muy claro en cada etapa.",
     name: "Sofía C.",
     role: "Profesional Independiente",
-    image: "/src/assets/testimonials/sofia.jpg", // Placeholder para imagen
+    image: "/src/assets/testimonials/sofia.webp", // Placeholder para imagen
   },
   {
     id: 1,
