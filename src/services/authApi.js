@@ -136,3 +136,30 @@ export const adminUpdateUser = async (userId, updateData) => {
   }
   return data;
 };
+
+/**
+ * Admin: Elimina un usuario por su ID.
+ * @param {string} userId - El ID del usuario a eliminar.
+ * @returns {Promise<Object>} - Promesa con el mensaje de éxito.
+ */
+export const adminDeleteUser = async (userId) => {
+  const token = getToken();
+  if (!token) {
+    throw new Error('Acción no autorizada. Se requiere token.');
+  }
+
+  const response = await fetch(`${BASE_URL}/users/${userId}`, { // Asumiendo que la ruta es DELETE /api/users/:id
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Error al eliminar el usuario.');
+  }
+  return data; // Devuelve { message }
+};
