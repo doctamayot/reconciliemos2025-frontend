@@ -18,7 +18,8 @@ import NotFoundPage from '../pages/NotFoundPage';
 import AdminDashboardPage from '../pages/AdminDashboardPage';
 import AdminCreateUserPage from '../pages/AdminCreateUserPage';
 import AdminUserListPage from '../pages/AdminUserListPage';
-// import UserProfilePage from '../pages/UserProfilePage';
+import AdminEditUserPage from '../pages/AdminEditUserPage';
+import UserProfilePage from '../pages/UserProfilePage';
 
 // Componente de Ruta Protegida
 import ProtectedRoute from './ProtectedRoute';
@@ -42,7 +43,8 @@ const AppRouter = () => {
           <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
           <Route path="/admin/crear-usuario" element={<AdminCreateUserPage />} />
           <Route path="/admin/lista-usuarios" element={<AdminUserListPage />} />
-          <Route path="/admin/perfil" element={<div>Página de Perfil Admin (Placeholder)</div>} />
+          <Route path="/admin/editar-usuario/:userId" element={<AdminEditUserPage />} />
+          <Route path="/admin/perfil" element={<UserProfilePage />} /> 
         </Route>
       </Route>
 
@@ -51,7 +53,7 @@ const AppRouter = () => {
         <Route element={<ProtectedRoute allowedRoles={['conciliador']} />}>
           <Route path="/conciliador/dashboard" element={<div>Dashboard Conciliador (Placeholder)</div>} />
           <Route path="/conciliador/agenda" element={<div>Agenda Conciliador (Placeholder)</div>} />
-          <Route path="/conciliador/perfil" element={<div>Página de Perfil Conciliador (Placeholder)</div>} />
+          <Route path="/conciliador/perfil" element={<UserProfilePage />} />
         </Route>
       </Route>
 
@@ -59,7 +61,7 @@ const AppRouter = () => {
       <Route element={<DashboardLayout />}>
         <Route element={<ProtectedRoute allowedRoles={['tercero']} />}>
           <Route path="/tercero/mis-solicitudes" element={<div>Mis Solicitudes - Tercero (Placeholder)</div>} />
-          <Route path="/tercero/perfil" element={<div>Página de Perfil Tercero (Placeholder)</div>} />
+          <Route path="/tercero/perfil" element={<UserProfilePage />} />
         </Route>
       </Route>
 

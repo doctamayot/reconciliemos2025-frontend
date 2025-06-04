@@ -49,54 +49,34 @@ const Header = () => {
   const commonButtonClasses =
     "font-semibold py-2 px-4 rounded-md text-sm transition duration-200 ease-in-out flex items-center space-x-2 shadow-sm";
   const whatsAppButtonClasses = `${commonButtonClasses} bg-green-500 hover:bg-green-600 text-white`;
-  const adminButtonClasses = `${commonButtonClasses} bg-gray-700 hover:bg-gray-800 text-white`;
+   const loginAccessButtonClasses = `${commonButtonClasses} bg-gray-700 hover:bg-gray-800 text-white`;
   const logoutButtonClasses = `${commonButtonClasses} bg-red-500 hover:bg-red-600 text-white`;
   const dashboardButtonClasses = `${commonButtonClasses} bg-blue-600 hover:bg-blue-700 text-white`; // Estilo para el botón de Dashboard
-
+const profileButtonClasses = `${commonButtonClasses} bg-blue-500 hover:bg-blue-600 text-white`;
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-16">
-          <Link
-            to="/"
-            onClick={closeMobileMenu}
-            className="flex-shrink-0 flex items-center"
-          >
-            <img
-              className="h-10 w-auto"
-              src={LogoImage}
-              alt="Reconciliemos Colombia Logo"
-            />
-            <span className="ml-3 text-lg font-bold text-gray-800">
-              Reconciliemos Colombia
-            </span>
+          <Link to="/" onClick={closeMobileMenu} className="flex-shrink-0 flex items-center">
+            <img className="h-10 w-auto" src={LogoImage} alt="Reconciliemos Colombia Logo" />
+            <span className="ml-3 text-lg font-bold text-gray-800">Reconciliemos Colombia</span>
           </Link>
 
           <div className="flex items-center space-x-3">
-            {/* Botón WhatsApp Desktop */}
             <div className="hidden md:flex">
-              <a
-                href={whatsAppLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={whatsAppButtonClasses}
-              >
+              <a href={whatsAppLink} target="_blank" rel="noopener noreferrer" className={whatsAppButtonClasses}>
                 <WhatsAppIcon />
                 <span>Contactar</span>
               </a>
             </div>
 
-            {/* Botones de Admin/Logout Desktop */}
             <div className="hidden md:flex items-center space-x-2">
-              {" "}
-              {/* Añadido items-center y space-x-2 */}
               {isAuthenticated && user ? (
                 <>
                   <span className="text-sm text-gray-700 hidden lg:inline">
                     Hola, {user.firstName || user.email}
                   </span>
-                  {/* --- BOTÓN DASHBOARD PARA ADMIN --- */}
-                  {user.role === "admin" && (
+                  {user.role === 'admin' && (
                     <Link
                       to="/admin/dashboard"
                       className={dashboardButtonClasses}
@@ -105,32 +85,28 @@ const Header = () => {
                       <span>Dashboard</span>
                     </Link>
                   )}
-                  {/* --- FIN BOTÓN DASHBOARD --- */}
-                  {/* El botón de perfil podría ser genérico o específico de admin */}
+                  {/* --- Aplicando nuevo estilo al botón de Perfil --- */}
                   <Link
-                    to={user.role === "admin" ? "/admin/perfil" : "/perfil"} // Rutas de perfil diferentes o la misma
-                    className={`${commonButtonClasses} bg-gray-200 hover:bg-gray-300 text-gray-700`}
+                    to={`/${user.role}/perfil`}
+                    className={profileButtonClasses} // Usando la nueva clase de estilo
                   >
-                    <UserCircleIcon className="h-5 w-5" />
+                    <UserCircleIcon className="h-5 w-5"/>
                     <span>Perfil</span>
                   </Link>
-                  <button
-                    onClick={handleLogout}
-                    className={logoutButtonClasses}
-                  >
+                  {/* --- Fin aplicación --- */}
+                  <button onClick={handleLogout} className={logoutButtonClasses}>
                     <ArrowLeftOnRectangleIcon className="h-5 w-5" />
                     <span>Cerrar Sesión</span>
                   </button>
                 </>
               ) : (
-                <Link to="/login" className={adminButtonClasses}>
+                <Link to="/login" className={loginAccessButtonClasses}> {/* Clase renombrada */}
                   Acceso
                 </Link>
               )}
             </div>
           </div>
 
-          {/* Botón Menú Móvil */}
           <div className="flex items-center md:hidden">
             <button
               onClick={toggleMobileMenu}
@@ -140,11 +116,7 @@ const Header = () => {
               aria-expanded={isMobileMenuOpen}
             >
               <span className="sr-only">Abrir menú principal</span>
-              {isMobileMenuOpen ? (
-                <XMarkIcon className="block h-6 w-6" />
-              ) : (
-                <Bars3Icon className="block h-6 w-6" />
-              )}
+              {isMobileMenuOpen ? <XMarkIcon className="block h-6 w-6" /> : <Bars3Icon className="block h-6 w-6" />}
             </button>
           </div>
         </div>
@@ -152,9 +124,7 @@ const Header = () => {
 
       {/* Panel Menú Móvil */}
       <div
-        className={`md:hidden transition-max-height duration-300 ease-in-out overflow-hidden ${
-          isMobileMenuOpen ? "max-h-96" : "max-h-0"
-        }`}
+        className={`md:hidden transition-max-height duration-300 ease-in-out overflow-hidden ${isMobileMenuOpen ? 'max-h-96' : 'max-h-0'}`}
         id="mobile-menu"
       >
         <div className="px-4 pt-3 pb-4 space-y-3 border-t border-gray-200">
@@ -171,8 +141,7 @@ const Header = () => {
 
           {isAuthenticated && user ? (
             <>
-              {/* --- BOTÓN DASHBOARD MÓVIL PARA ADMIN --- */}
-              {user.role === "admin" && (
+              {user.role === 'admin' && (
                 <Link
                   to="/admin/dashboard"
                   onClick={closeMobileMenu}
@@ -182,20 +151,21 @@ const Header = () => {
                   <span>Dashboard</span>
                 </Link>
               )}
-              {/* --- FIN BOTÓN DASHBOARD MÓVIL --- */}
+              {/* --- Aplicando nuevo estilo al botón de Perfil en móvil --- */}
               <Link
-                to={user.role === "admin" ? "/admin/perfil" : "/perfil"}
+                to={`/${user.role}/perfil`}
                 onClick={closeMobileMenu}
-                className={`${commonButtonClasses} bg-gray-200 hover:bg-gray-300 text-gray-700 w-full justify-center`}
+                className={`${profileButtonClasses} w-full justify-center`} // Usando la nueva clase
               >
-                <UserCircleIcon className="h-5 w-5" />
+                 <UserCircleIcon className="h-5 w-5"/>
                 <span>Mi Perfil</span>
               </Link>
+              {/* --- Fin aplicación --- */}
               <button
                 onClick={handleLogout}
                 className={`${logoutButtonClasses} w-full justify-center`}
               >
-                <ArrowLeftOnRectangleIcon className="h-5 w-5" />
+                 <ArrowLeftOnRectangleIcon className="h-5 w-5" />
                 <span>Cerrar Sesión</span>
               </button>
             </>
@@ -203,9 +173,9 @@ const Header = () => {
             <Link
               to="/login"
               onClick={closeMobileMenu}
-              className={`${adminButtonClasses} block w-full max-w-xs mx-auto text-center justify-center`}
+              className={`${loginAccessButtonClasses} block w-full max-w-xs mx-auto text-center justify-center`}  // Clase renombrada
             >
-              Admin {/* O "Acceso" */}
+              Acceso {/* O "Admin" si es solo para admin */}
             </Link>
           )}
         </div>

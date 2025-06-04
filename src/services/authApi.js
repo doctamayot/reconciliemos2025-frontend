@@ -98,24 +98,30 @@ export const adminCreateUser = async (userData) => {
   return data;
 };
 
-export const adminGetAllUsers = async () => {
+/**
+ * Admin: Obtiene todos los usuarios con paginación.
+ * @param {number} page - El número de página a solicitar.
+ * @param {number} limit - El número de items por página.
+ * @returns {Promise<Object>} - Promesa con { users, totalUsers, currentPage, totalPages, hasMore }
+ */
+export const adminGetAllUsers = async (page = 1, limit = 10) => {
   const token = getToken();
-  if (!token) throw new Error("Acción no autorizada. Se requiere token.");
+  if (!token) throw new Error('Acción no autorizada. Se requiere token.');
 
-  const response = await fetch(`${BASE_URL}/users`, {
-    // Asumiendo que la ruta es /api/users
-    method: "GET",
+  const response = await fetch(`${BASE_URL}/users?page=${page}&limit=${limit}`, { // Añadimos query params
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
     },
   });
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.message || "Error al obtener usuarios.");
+    throw new Error(data.message || 'Error al obtener usuarios.');
   }
-  return data;
+  return data; // Ahora devuelve el objeto de paginación
 };
+
 
 export const adminUpdateUser = async (userId, updateData) => {
   const token = getToken();
@@ -162,4 +168,31 @@ export const adminDeleteUser = async (userId) => {
     throw new Error(data.message || 'Error al eliminar el usuario.');
   }
   return data; // Devuelve { message }
+};
+
+/**
+ * Admin: Obtiene un usuario específico por su ID.
+ * @param {string} userId - El ID del usuario a obtener.
+ * @returns {Promise<Object>} - Promesa con los datos del usuario.
+ */
+export const adminGetUserById = async (userId) => {
+  const token = getToken();
+  if (!token) {
+    throw new Error('Acción no autorizada. Se requiere token.');
+  }
+
+  const response = await fetch(`${BASE_URL}/users/${userId}`, { // Asumiendo que la ruta es GET /api/users/:id
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Error al obtener los detalles del usuario.');
+  }
+  return data; // Devuelve el objeto usuario
 };
