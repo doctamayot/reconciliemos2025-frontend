@@ -104,22 +104,39 @@ export const adminCreateUser = async (userData) => {
  * @param {number} limit - El número de items por página.
  * @returns {Promise<Object>} - Promesa con { users, totalUsers, currentPage, totalPages, hasMore }
  */
-export const adminGetAllUsers = async (page = 1, limit = 10) => {
+export const adminGetAllUsers = async (page = 1, limit = 15, role = 'todos', search = '') => {
   const token = getToken();
   if (!token) throw new Error('Acción no autorizada. Se requiere token.');
 
-  const response = await fetch(`${BASE_URL}/users?page=${page}&limit=${limit}`, { // Añadimos query params
+  // Usamos URLSearchParams para construir la URL de forma segura
+  const queryParams = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    role,
+  });
+
+  // --- LÓGICA CRÍTICA ---
+  // Solo añadimos el parámetro 'search' a la URL si tiene un valor "truthy" (no es un string vacío).
+  if (search) {
+    queryParams.append('search', search);
+  }
+  // --- FIN LÓGICA CRÍTICA ---
+
+  const url = `${BASE_URL}/users?${queryParams.toString()}`;
+
+  const response = await fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
     },
   });
+
   const data = await response.json();
   if (!response.ok) {
     throw new Error(data.message || 'Error al obtener usuarios.');
   }
-  return data; // Ahora devuelve el objeto de paginación
+  return data;
 };
 
 
@@ -195,4 +212,33 @@ export const adminGetUserById = async (userId) => {
     throw new Error(data.message || 'Error al obtener los detalles del usuario.');
   }
   return data; // Devuelve el objeto usuario
+};
+
+/**
+ * Admin: Establece una nueva contraseña para un usuario.
+ * @param {string} userId - El ID del usuario.
+ * @param {Object} passwordData - Objeto con { password, confirmPassword }.
+ * @returns {Promise<Object>} - Promesa con el mensaje de éxito.
+ */
+export const adminSetPassword = async (userId, passwordData) => {
+  const token = getToken();
+  if (!token) {
+    throw new Error('Acción no autorizada. Se requiere token.');
+  }
+
+  const response = await fetch(`${BASE_URL}/users/${userId}/set-password`, { // Endpoint nuevo
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify(passwordData),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Error al establecer la nueva contraseña.');
+  }
+  return data;
 };
