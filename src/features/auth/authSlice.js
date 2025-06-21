@@ -62,6 +62,11 @@ const authSlice = createSlice({
     clearAuthError: (state) => {
       state.error = null;
     },
+    updateUserProfile: (state, action) => {
+      if (state.user) {
+        state.user = { ...state.user, ...action.payload };
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -113,7 +118,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { clearAuthError } = authSlice.actions;
+export const { clearAuthError, updateUserProfile } = authSlice.actions;
 
 // Selectors
 export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;

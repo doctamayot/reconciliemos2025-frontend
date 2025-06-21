@@ -242,3 +242,66 @@ export const adminSetPassword = async (userId, passwordData) => {
   }
   return data;
 };
+
+export const uploadProfilePicture = async (file) => {
+  const token = getToken();
+  if (!token) throw new Error('Acción no autorizada.');
+
+  const formData = new FormData();
+  formData.append('profilePicture', file); // 'profilePicture' debe coincidir con upload.single() en el backend
+
+  const response = await fetch(`${BASE_URL}/users/me/picture`, {
+    method: 'PUT',
+    headers: {
+      // NO establezcas 'Content-Type': 'application/json' cuando envías FormData.
+      // El navegador lo hará automáticamente con el boundary correcto.
+      'Authorization': `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || 'Error al subir la imagen.');
+  }
+  return data; // Devuelve { message, user }
+};
+
+export const deleteProfilePicture = async () => {
+  const token = getToken();
+  if (!token) throw new Error('Acción no autorizada.');
+
+  const response = await fetch(`${BASE_URL}/users/me/picture`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || 'Error al eliminar la imagen.');
+  }
+  return data;
+};
+
+export const changeMyPassword = async (passwordData) => {
+  const token = getToken();
+  if (!token) throw new Error('Acción no autorizada.');
+
+  const response = await fetch(`${BASE_URL}/auth/me/changepassword`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify(passwordData),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || 'Error al cambiar la contraseña.');
+  }
+  return data;
+};
